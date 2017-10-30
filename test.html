@@ -1,0 +1,36 @@
+<html>
+<head>
+<title> UI-Designer</title>
+<script src="himalaya.js"></script>
+
+<link rel="stylesheet" type="text/css" href="resizable.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="resizable.js"></script>
+<script>
+  $( function() {
+    $( ".draggable" ).draggable({cancel:false});
+    $( ".resizable" ).resize();
+  } );
+  </script>
+<head>
+<div id="tools" style="position: absolute; border: 1px solid black; width: 135px; height: 100%">
+	<button id="addlabel" style="width:100%"> Add a label </button>
+	<button id="addtextbox" style="width:100%"> Add a text box </button>
+	<button id="addbutton" style="width:100%"> Add a button </button>
+	<button id="generatejson" style="width:100%" > Generate Json </button>
+
+</div>
+<div id="canvas" style="position: absolute; left: 150px; border: 1px solid black; width:1170px; height:100%;">
+	<div class="resizable draggable" style="position:absolute; top: 100px; left: 400px; border:1px solid black">
+	<label class="label" >User:</label>
+	</div>
+	<input class=" draggable textbox" type="text" style="position:absolute; top: 100px; left: 440px;"></input>
+	<label class=" draggable label" style="position:absolute; top: 120px; left: 400px;">Pass:</label>
+	<input class=" draggable textbox" type="text" style="position:absolute; top: 120px; left: 440px;"></input>
+	<input class=" draggable button" type="submit" style="position:absolute; top: 150px; left: 480px;"></input<>
+</div>
+
+ <script src="index.js"></script>
+
+</html>
