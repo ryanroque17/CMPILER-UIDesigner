@@ -57,6 +57,13 @@ document.getElementById("addbutton").addEventListener("click", function(e) {
 document.getElementById("generatejson").addEventListener("click", function() {  
 	var html = document.getElementById("canvas").outerHTML;
     var json = window.himalaya.parse(html)
+
+    var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));
+	var downloadElement = document.getElementById('downloadJsonFile');
+	downloadElement.setAttribute("href",     dataStr     );
+	downloadElement.setAttribute("download", "ui_design.json");
+	downloadElement.click();
+
     console.log('👉', json)
 
     /*fs.writeFile("./object.json", JSON.stringify(json), (err) => {
