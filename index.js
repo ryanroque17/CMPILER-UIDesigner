@@ -51,7 +51,7 @@ document.getElementById("addlabel").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<label class='element label' style='position:absolute; top: "+ e.pageY + ";left: "+ e.pageX+"'>Label</label>";
+	var html = document.getElementById("canvas").innerHTML+="<label class='element label' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'>Label</label>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
@@ -69,7 +69,7 @@ document.getElementById("addtextbox").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<input type='text' class='element input' style='position:absolute; top: "+ e.pageY + ";left: "+ e.pageX+"'></input>";
+	var html = document.getElementById("canvas").innerHTML+="<input type='text' class='element input' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
@@ -86,7 +86,7 @@ document.getElementById("addbutton").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<input type='submit' class='element button' style='position:absolute; top: "+ e.pageY + ";left: "+ e.pageX+"'></input>";
+	var html = document.getElementById("canvas").innerHTML+="<input type='submit' class='element button' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
