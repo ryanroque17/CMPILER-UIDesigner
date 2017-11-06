@@ -1,16 +1,15 @@
 function drag() {
     $(".element").draggable({cancel:false});
     
-  };
-
+ };
 
 $(document).on("click", ".element", function(){
 
   	var prop = document.getElementById("properties");
    	prop.style.display = 'block';
     prop.innerHTML=
-    "Properties: <label>Height=</label> <input id='heightprop' style='width:45px' type='text' value='" + $(this).height() +"px' </input> "+
-    "<label>Width=</label> <input id='widthprop' style='width:45px' type='text' value='" + $(this).width() +"px'> </input>" +
+    "Properties: <label>Height =</label> <input id='heightprop' style='width:45px' type='text' value='" + $(this).height() +"px' </input> "+
+    "<label>Width =</label> <input id='widthprop' style='width:45px' type='text' value='" + $(this).width() +"px'> </input>" +
     "<label>Placeholder =</label> <input id='placeholderprop' style='width:75px' type='text' >"+
     "<button id='changeprop' style='width:105px'> Save Changes </button>";
 
@@ -97,6 +96,7 @@ document.getElementById("addbutton").addEventListener("click", function(e) {
 /*    console.log(ihtml);
 	console.log(ohtml);*/
 })
+
 document.getElementById("generatejson").addEventListener("click", function() {  
 	var html = document.getElementById("canvas").innerHTML;
 
@@ -118,3 +118,57 @@ document.getElementById("generatejson").addEventListener("click", function() {
     });*/
 })
 
+function readSingleFile(evt) {
+	var file = evt.target.files[0];
+
+	if(file) {
+		var fr = new FileReader();
+		fr.onload = function(e) {
+			var contents = e.target.result;
+			
+			console.log(contents);
+			parse(contents);
+		}
+		fr.readAsText(file);
+	} else {
+		alert("Failed to load file!");
+	}
+}
+
+$('#my-button').click(function(){
+    $('#loadjson').click();
+});
+
+function checkIfCompatible() {
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		document.getElementById('loadjson').addEventListener('change', readSingleFile, false);
+	} else {
+		alert("File reading is not supported!");
+	}
+}
+
+function parse(contents) {
+	document.getElementById("canvas").innerHTML = "";
+	var obj = $.parseJSON(contents);
+	$.each(obj, function() {
+		console.log(this);
+		if(this['tagName'] == 'label') {
+			document.getElementById("canvas").innerHTML += "<label class='element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'>" + this['children'][0]['content'] + "</label>";
+		} else if(this['tagName'] == 'input') {
+			if(this['attributes']['type'] == 'text') {
+				document.getElementById("canvas").innerHTML += "<input type='text' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
+			} else if(this['attributes']['type'] == 'submit') {
+				document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+			}
+		}
+
+		// document.getElementById("canvas").innerHTML += "<label class='element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'>" + this['children'][0]['content'] + "</label>";
+	})
+
+	// document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+
+}
+
+document.getElementById("loadjson").addEventListener("click", function() {  
+	checkIfCompatible();
+})

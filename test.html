@@ -1,10 +1,15 @@
 <html>
 <head>
 <title> UI-Designer</title>
-<script src="himalaya.js"></script>
-
 <link rel="stylesheet" type="text/css" href="resizable.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<style>
+	#properties > * {
+		margin: 2px;
+	}
+</style>
+<script src="himalaya.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -19,16 +24,15 @@
 	});
 </script>
 
-
 <head>
 <div id="tools">
-	<button id="addlabel" style="position: absolute; top:10px; width:10%"> Add a label </button>
-	<button id="addtextbox" style="position: absolute; top:10px; left:145px; width:10%"> Add a text box </button>
-	<button id="addbutton" style="position: absolute; top:10px; left:285px;  width:10%"> Add a button </button>
-	<button id="generatejson" style="position: absolute; top:10px; left:425px; width:10%" > Generate Json </button>
+	<button id="addlabel" style="position: absolute; top:10px; width:10%">Add a label</button>
+	<button id="addtextbox" style="position: absolute; top:10px; left:185px; width:10%">Add a text box</button>
+	<button id="addbutton" style="position: absolute; top:10px; left:360px;  width:10%">Add a button</button>
+	<button id="generatejson" style="position: absolute; top:10px; left:535px; width:10%" >Generate JSON</button>
 
-	<div id="properties" style="display:none;position: absolute; top:10px; left:565px; width:45%; border: 1px solid black">
-	</div>
+	<input type="button" id="my-button" value="Load JSON" style="position: absolute; top:10px; left:715; width:10%" type="file">
+	<input type="file" name="loadjson" id="loadjson" style="display: hidden">
 </div>
 <div id="canvas" style="position: absolute;border: 1px solid black; width:1366px; height:768px; top:35px">
 	<label class="element label" style="position:absolute; top: 100px; left: 400px;" class="label" >User:</label>
@@ -37,11 +41,12 @@
 	<input class="element input" type="text" style="position: absolute; top: 120px; left: 440px;"></input>
 	<input class="element button" type="submit" style="position: absolute; top: 150px; left: 480px;"></input<>
 </div>
+<div id="properties" style="display:none; position: absolute; top: 815px; border: 1px solid black; padding: 10px;">
+</div>
 
 <a id="downloadJsonFile" style="display:none"></a>
 
- <script src="index.js"></script>
- <script src="resizable.js"></script>
-
+<script src="index.js"></script>
+<script src="resizable.js"></script>
 
 </html>
