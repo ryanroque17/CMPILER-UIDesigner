@@ -156,12 +156,18 @@ function parse(contents) {
 			document.getElementById("canvas").innerHTML += "<label class='element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'>" + this['children'][0]['content'] + "</label>";
 		} else if(this['tagName'] == 'input') {
 			if(this['attributes']['type'] == 'text') {
-				console.log(this['attributes']['placeholder'])
+				if(this['attributes']['placeholder'] == null) {
+					document.getElementById("canvas").innerHTML += "<input type='text' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
+				} else {
 					document.getElementById("canvas").innerHTML += "<input type='text' placeholder='"+this['attributes']['placeholder'] + "' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
+				}
 			
 			} else if(this['attributes']['type'] == 'submit') {
-				console.log(this['attributes']['value'])
-				document.getElementById("canvas").innerHTML += "<input type='submit' value='" + this['attributes']['value'] + "'class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+				if(this['attributes']['value'] == null) {
+					document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+				} else {
+					document.getElementById("canvas").innerHTML += "<input type='submit' value='" + this['attributes']['value'] + "'class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+				}
 			}
 		}
 
