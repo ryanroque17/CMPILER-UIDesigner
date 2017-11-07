@@ -3,6 +3,8 @@ function drag() {
     
  };
 
+ var global_selected; 
+
 $(document).on("click", ".element", function(){
 
   	var prop = document.getElementById("properties");
@@ -13,6 +15,7 @@ $(document).on("click", ".element", function(){
     "<label>Placeholder =</label> <input id='placeholderprop' style='width:75px' type='text' >"+
     "<button id='changeprop' style='width:105px'> Save Changes </button>";
 
+    global_selected = $(this);
     eval(changeprop($(this)));
 });
 
@@ -25,6 +28,7 @@ $(document).on("click", ".label", function(){
     "<label>Text =</label> <input id='textprop' style='width:75px' type='text' value='"+ $(this).text() + "'> </input>" +
     "<button id='changeprop' style='width:105px'> Save Changes </button>";
 
+    global_selected = $(this);
     eval(changeprop($(this)));
 });
 
@@ -43,11 +47,12 @@ function changeprop(element) {
 
 		}
 	})
+
+	document.getElementById("deleteelement").addEventListener("click", function(e) { 
+		$(global_selected).remove();
+	})
 }
 
-function deleteelement(element) {
-	$(element).remove();
-}
 document.getElementById("addlabel").addEventListener("click", function(e) { 
 	
 	e.preventDefault();
