@@ -8,7 +8,7 @@ $(document).on("click", ".element", function(){
   	var prop = document.getElementById("properties");
    	prop.style.display = 'block';
     prop.innerHTML=
-    "Properties: <label>Height =</label> <input id='heightprop' style='width:45px' type='text' value='" + $(this).height() +"px' </input> "+
+    "<button id='deleteelement' style='width:105px'>Delete Element</button> Properties: <label>Height =</label> <input id='heightprop' style='width:45px' type='text' value='" + $(this).height() +"px' </input> "+
     "<label>Width =</label> <input id='widthprop' style='width:45px' type='text' value='" + $(this).width() +"px'> </input>" +
     "<label>Placeholder =</label> <input id='placeholderprop' style='width:75px' type='text' >"+
     "<button id='changeprop' style='width:105px'> Save Changes </button>";
@@ -21,7 +21,7 @@ $(document).on("click", ".label", function(){
   	var prop = document.getElementById("properties");
    	prop.style.display = 'block';
     prop.innerHTML=
-    "Properties: <label>Font size =</label> <input id='fontsizeprop' style='width:45px' type='text' value='" + $(this).css('font-size') +"' </input> "+
+    "<button id='deleteelement' style='width:105px'>Delete Element</button> Properties: <label>Font size =</label> <input id='fontsizeprop' style='width:45px' type='text' value='" + $(this).css('font-size') +"' </input> "+
     "<label>Text =</label> <input id='textprop' style='width:75px' type='text' value='"+ $(this).text() + "'> </input>" +
     "<button id='changeprop' style='width:105px'> Save Changes </button>";
 
@@ -43,6 +43,10 @@ function changeprop(element) {
 
 		}
 	})
+}
+
+function deleteelement(element) {
+	$(element).remove();
 }
 document.getElementById("addlabel").addEventListener("click", function(e) { 
 	
@@ -161,7 +165,6 @@ function parse(contents) {
 				} else {
 					document.getElementById("canvas").innerHTML += "<input type='text' placeholder='"+this['attributes']['placeholder'] + "' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
 				}
-			
 			} else if(this['attributes']['type'] == 'submit') {
 				if(this['attributes']['value'] == null) {
 					document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
@@ -170,14 +173,13 @@ function parse(contents) {
 				}
 			}
 		}
-
-		// document.getElementById("canvas").innerHTML += "<label class='element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'>" + this['children'][0]['content'] + "</label>";
 	})
-
-	// document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
-
 }
 
 document.getElementById("loadjson").addEventListener("click", function() {  
 	checkIfCompatible();
 })
+
+$("#clearbutton").on('click', function() {
+	document.getElementById("canvas").innerHTML = "";
+});
