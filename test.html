@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $( function() {
-    $( ".element" ).draggable({cancel:false})
+  	$(".element").draggable({ containment:"#canvas", cancel:false});
 //    $( ".element" ).resizable({cancel:false})
   } );
 
@@ -29,7 +29,7 @@
 	<button id="addlabel" style="position: absolute; top:10px; width:10%">Add a label</button>
 	<button id="addtextbox" style="position: absolute; top:10px; left:185px; width:10%">Add a text box</button>
 	<button id="addbutton" style="position: absolute; top:10px; left:360px;  width:10%">Add a button</button>
-	<button id="generatejson" style="position: absolute; top:10px; left:535px; width:10%" >Generate JSON</button>
+	<button id="generatejson" style="position: absolute; top:10px; left:535px; width:10%">Generate JSON</button>
 	<input type="button" id="my-button" value="Load JSON" style="position: absolute; top:10px; left:715; width:10%" type="file">
 	<input type="file" name="loadjson" id="loadjson" style="display: none;">
 	<button id="clearbutton" style="position: absolute; top:10px; left:890px;  width:10%">Clear Canvas</button>

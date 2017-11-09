@@ -1,6 +1,5 @@
 function drag() {
-    $(".element").draggable({cancel:false});
-    
+    $(".element").draggable({ containment:"#canvas", cancel:false});
  };
 
  var global_selected; 
@@ -32,20 +31,24 @@ $(document).on("click", ".label", function(){
     eval(changeprop($(this)));
 });
 
+
 function changeprop(element) {
 	document.getElementById("changeprop").addEventListener("click", function(e) { 
 		if(element.attr('class').indexOf("label") >= 0){
 			element.css({'font-size': document.getElementById("fontsizeprop").value})
 			element.text(document.getElementById("textprop").value);
 		}else{
-			element.height(document.getElementById("heightprop").value) ;
+			element.height(document.getElementById('heightprop').value);
+			if(element.attr('type') == 'submit') {
+				$(element).css("border", "none");
+			}
 			element.width(document.getElementById("widthprop").value);
 			if(element.attr('class').indexOf("input") >= 0)
 				element.attr("placeholder", document.getElementById("placeholderprop").value);
 			else
 				element.val(document.getElementById("placeholderprop").value);
-
 		}
+
 	})
 
 	document.getElementById("deleteelement").addEventListener("click", function(e) { 
@@ -59,7 +62,7 @@ document.getElementById("addlabel").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<label class='element label' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'>Label</label>";
+	var html = document.getElementById("canvas").innerHTML+="<label class='draggable element label' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'>Label</label>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
@@ -77,7 +80,7 @@ document.getElementById("addtextbox").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<input type='text' class='element input' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
+	var html = document.getElementById("canvas").innerHTML+="<input type='text' class='draggable element input' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
@@ -94,7 +97,7 @@ document.getElementById("addbutton").addEventListener("click", function(e) {
     console.log(e.pageX);
     console.log(e.pageY);
 
-	var html = document.getElementById("canvas").innerHTML+="<input type='submit' class='element button' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
+	var html = document.getElementById("canvas").innerHTML+="<input type='submit' class='draggable element button' style='position:absolute; top: "+ e.pageY + "px;left: "+ e.pageX+"px'></input>";
 
 /*	var ihtml = document.getElementById("canvas").innerHTML;
 	var ohtml = document.getElementById("canvas").outerHTML;*/
@@ -161,20 +164,93 @@ function parse(contents) {
 	var obj = $.parseJSON(contents);
 	$.each(obj, function() {
 		console.log(this);
+
+		var hasHeight = false;
+		var hasWidth = false;
+		if(this['type'] != "Text") {
+		if(this['attributes']['style']['height'] == null) {
+
+		}
+		 else {
+		 	var height = this['attributes']['style']['height'];
+		 	hasHeight = true;
+		 }
+
+		 if(this['attributes']['style']['width'] == null) {
+
+		 } else {
+			var width = this['attributes']['style']['width'];
+			hasWidth = true;
+		}
+		}
+
 		if(this['tagName'] == 'label') {
-			document.getElementById("canvas").innerHTML += "<label class='element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'>" + this['children'][0]['content'] + "</label>";
+
+			var element = "<label class='draggable element label' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'];
+
+			if(hasHeight) {
+				element += "; height: " + height; 
+			}
+			if(hasWidth) {
+				element += "; width: " + width;
+			}
+
+			element += "'>" + this['children'][0]['content'] + "</label>";
+
+			document.getElementById("canvas").innerHTML += element
 		} else if(this['tagName'] == 'input') {
 			if(this['attributes']['type'] == 'text') {
 				if(this['attributes']['placeholder'] == null) {
-					document.getElementById("canvas").innerHTML += "<input type='text' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
+
+					var element = "<input type='text' class='draggable element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'];
+
+					if(hasHeight) {
+						element += "; height: " + height; 
+					}
+					if(hasWidth) {
+						element += "; width: " + width;
+					}
+
+					element +=  "'></input>";
+					document.getElementById("canvas").innerHTML += element;
 				} else {
-					document.getElementById("canvas").innerHTML += "<input type='text' placeholder='"+this['attributes']['placeholder'] + "' class='element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left']+"'></input>";
+
+					var element = "<input type='text' placeholder='"+this['attributes']['placeholder'] + "' class='draggable element input' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'];
+
+					if(hasHeight) {
+						element += "; height: " + height; 
+					}
+					if(hasWidth) {
+						element += "; width: " + width;
+					}
+					
+					element += "'></input>";
+					document.getElementById("canvas").innerHTML += element;
 				}
 			} else if(this['attributes']['type'] == 'submit') {
 				if(this['attributes']['value'] == null) {
-					document.getElementById("canvas").innerHTML += "<input type='submit' class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+					var element = "<input type='submit' class='draggable element button' style='border: none; position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'];
+					if(hasHeight) {
+						element += "; height: " + height; 
+					}
+					if(hasWidth) {
+						element += "; width: " + width;
+					}
+					
+					element += "'></input>";
+					document.getElementById("canvas").innerHTML += element
 				} else {
-					document.getElementById("canvas").innerHTML += "<input type='submit' value='" + this['attributes']['value'] + "'class='element button' style='position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'] +"'></input>";
+					var element = "<input type='submit' value='" + this['attributes']['value'] + "'class='draggable element button draggable' style='border: none; position:absolute; top: "+ this['attributes']['style']['top'] + ";left: "+ this['attributes']['style']['left'];
+
+					if(hasHeight) {
+						element += "; height: " + height; 
+					}
+					if(hasWidth) {
+						element += "; width: " + width;
+					}
+					
+					element += "'></input>";
+					document.getElementById("canvas").innerHTML += element
 				}
 			}
 		}
@@ -183,6 +259,7 @@ function parse(contents) {
 
 document.getElementById("loadjson").addEventListener("click", function() {  
 	checkIfCompatible();
+	eval(drag());
 })
 
 $("#clearbutton").on('click', function() {
